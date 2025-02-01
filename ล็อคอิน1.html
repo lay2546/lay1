@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Login Example</title>
+  
+  <!-- 1. นำเข้า Firebase SDK -->
+  <!-- นำเข้า Firebase SDK สำหรับการใช้ Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+</head>
+<body>
+
+  <h2>Firebase Email/Password Login</h2>
+
+  <!-- 2. ฟอร์มสำหรับการล็อคอิน -->
+  <form id="login-form">
+    <input type="email" id="email" placeholder="Email" required> <!-- ช่องกรอกอีเมล -->
+    <input type="password" id="password" placeholder="Password" required> <!-- ช่องกรอกรหัสผ่าน -->
+    <button type="submit">Login</button> <!-- ปุ่มสำหรับล็อคอิน -->
+  </form>
+
+  <!-- 3. ข้อมูลผู้ใช้หลังจากล็อคอินสำเร็จ -->
+  <div id="user-info" style="display:none;">
+    <p>Welcome, <span id="user-name"></span></p> <!-- แสดงชื่อผู้ใช้ (อีเมล) -->
+    <button id="logout-btn">Logout</button> <!-- ปุ่มสำหรับออกจากระบบ -->
+  </div>
+
+  <script>
+    // 4. ตั้งค่าคอนฟิก Firebase
+    const firebaseConfig = {
+      apiKey: "your-api-key", // กำหนด API Key ของโปรเจค Firebase
+      authDomain: "your-auth-domain", // กำหนด Auth Domain
+      projectId: "your-project-id", // กำหนด Project ID
+      storageBucket: "your-storage-bucket", // กำหนด Storage Bucket
+      messagingSenderId: "your-messaging-sender-id", // กำหนด Messaging Sender ID
+      appId: "your-app-id" // กำหนด App ID
+    };
+
+    // 5. เริ่มต้น Firebase ด้วยคอนฟิกที่กำหนด
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // 6. การจัดการล็อคอินเมื่อผู้ใช้กดปุ่ม Submit
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault(); // ป้องกันไม่ให้ฟอร์มรีเฟรชหน้าเว็บ
+
+      const email = document.getElementById('email').value; // รับค่าอีเมลจากฟอร์ม
+      const password = document.getElementById('password').value; // รับค่ารหัสผ่านจากฟอร์ม
+
+      // 7. ใช้ Firebase Authentication เพื่อทำการล็อคอิน
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => { // ถ้าล็อคอินสำเร็จ
+          const user = userCredential.user; // รับข้อมูลผู้ใช้
+          document.getElementById('user-info').style.display = 'block'; // แสดงข้อมูลผู้ใช้
+          document.getElementById('user-name').innerText = user.email; // แสดงอีเมลของผู้ใช้
+        })
+        .catch((error) => { // ถ้ามีข้อผิดพลาดเกิดขึ้น
+          alert('Error: ' + error.message); // แสดงข้อความผิดพลาด
+        });
+    });
+
+    // 8. การจัดการออกจากระบบเมื่อผู้ใช้กดปุ่ม Logout
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      auth.signOut() // ทำการออกจากระบบ
+        .then(() => {
+          document.getElementById('user-info').style.display = 'none'; // ซ่อนข้อมูลผู้ใช้
+          alert('Logged out successfully'); // แสดงข้อความออกจากระบบสำเร็จ
+        })
+        .catch((error) => { // ถ้ามีข้อผิดพลาดในการออกจากระบบ
+          alert('Error: ' + error.message); // แสดงข้อความผิดพลาด
+        });
+    });
+  </script>
+</body>
+</html>

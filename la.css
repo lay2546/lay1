@@ -1,0 +1,216 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* สีพื้นหลังของหน้าเว็บ */
+    color: #333; /* สีข้อความทั่วไป */
+}
+
+/* Header Styles */
+.navbar {
+    display: flex; /* ใช้ Flexbox เพื่อจัดระเบียบ */
+    justify-content: space-between; /* จัดให้มีระยะห่างระหว่างองค์ประกอบ */
+    align-items: center; /* จัดให้อยู่กลางแนวตั้ง */
+    padding: 20px 40px; /* การเติมภายใน */
+    background-color: #ffffff; /* สีพื้นหลังของ navbar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* เงาเบา */
+}
+
+.navbar h1 {
+    margin: 0; /* ลบระยะขอบ */
+    font-size: 30px; /* ขนาดฟอนต์ */
+}
+
+nav ul {
+    list-style: none; /* ลบสัญลักษณ์หน้ารายการ */
+    display: flex; /* แสดงรายการในรูปแบบแถว */
+    gap: 20px; /* ระยะห่างระหว่างรายการ */
+    padding: 0; /* ลบการเติม */
+    margin: 0; /* ลบระยะขอบ */
+}
+
+nav ul li a {
+    text-decoration: none; /* ลบเส้นใต้จากลิงก์ */
+    color: #000; /* สีข้อความในลิงก์ */
+    font-weight: bold; /* ตัวหนาสำหรับข้อความในลิงก์ */
+    transition: color 0.3s ease; /* การเปลี่ยนสีเมื่อชี้ */
+}
+
+nav ul li a:hover {
+    color: #1058dd; /* เปลี่ยนสีเมื่อชี้ */
+}
+
+/* Hero Text Styles */
+.hero-text h2 {
+    font-size: 36px; /* ขนาดฟอนต์ */
+    margin-bottom: 20px; /* ระยะขอบด้านล่าง */
+}
+
+/* Main Header Styles */
+h2 {
+    margin: 0; /* ลบระยะขอบ */
+    font-size: 30px; /* ขนาดฟอนต์ */
+    padding: 20px 40px; /* การเติมภายใน */
+    font-family: "Prompt", Arial, sans-serif;
+    font-weight: bold;
+    margin: -1px 0 -23px; /* ระยะขอบด้านบนและล่าง */
+    font-size: 33px; /* ขนาดฟอนต์หัวข้อ */
+}
+
+h1 {
+    margin: 0 0 525px; /* ระยะขอบด้านบนและล่าง */
+    font-size: 24px; /* ขนาดฟอนต์หัวข้อ */
+}
+
+p1 {
+    margin-top: -480px; /* ลบระยะขอบ */
+    font-size: 24px; /* ขนาดฟอนต์ */
+    color: #333; /* สีข้อความ */
+}
+
+/* Icons Section Styles */
+.icons1 {
+    text-align: center; /* จัดข้อความให้อยู่กลาง */
+    margin: 20px 0; /* ระยะห่างด้านบนและด้านล่าง */
+}
+
+.recreation-image {
+    max-width: 100%; /* ทำให้ภาพปรับขนาดตามความกว้าง */
+    height: auto; /* รักษาสัดส่วนภาพ */
+    border-radius: 8px; /* มุมโค้งของภาพ */
+}
+
+/* Recreation Description */
+.recreation-description {
+    font-size: 1.2em; /* ขนาดฟอนต์ */
+    color: #333; /* สีข้อความ */
+    line-height: 1.5; /* ความสูงของบรรทัด */
+    margin: 100px 0; /* ระยะห่างด้านบนและด้านล่าง */
+    max-width: 600px; /* กำหนดความกว้างสูงสุดเพื่อไม่ให้ข้อความยาวเกินไป */
+}
+
+/* Image Styles */
+.img {
+    width: 100px; /* กำหนดความกว้าง */
+    height: 100px; /* กำหนดความสูง */
+    border: 1px solid #000; /* กำหนดกรอบ */
+    text-align: center; /* จัดข้อความให้อยู่กลาง */
+    background-color: #000; /* สีพื้นหลัง */
+}
+
+/* Box Styles */
+.box {
+    border: 2px solid #007bff; /* กำหนดกรอบ 2 พิกเซล สีฟ้า */
+    border-radius: 8px; /* ความโค้งของมุม */
+    padding: 20px; /* การเติมภายใน */
+    margin: 20px; /* ระยะห่างรอบ ๆ กรอบ */
+    background-color: #ffffff; /* สีพื้นหลังของกรอบ */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* เงาเบา */
+}
+
+h4 {
+    font-size: 16px;
+    margin-bottom: 30px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+}
+
+.indent1 {  
+    text-indent: 30px;  
+    line-height: 1.6; /* เพิ่มความสูงของบรรทัด */
+    margin: 24px 0; /* เพิ่มระยะห่างด้านบนและด้านล่าง */
+    font-size: 25;
+}
+
+b {
+    font-size: 34px; 
+}
+
+p {
+    font-size: 16px; /* ขนาดฟอนต์ที่ต้องการ */
+    line-height: 1.6; /* ความสูงของบรรทัด */
+    margin: 10px 0; /* ระยะห่างด้านบนและล่าง */
+}
+
+strong {
+    font-weight: bold; /* ทำให้ข้อความในแท็ก strong หนา */
+}
+
+h6 {
+    text-indent: -0px;
+    font-size: 16px; /* ขนาดฟอนต์ */
+    line-height: 1.5; /* ความสูงของบรรทัด */
+    margin: 20px 0; /* ระยะห่างด้านบนและด้านล่าง */
+    color: #000000; /* สีข้อความ */
+}
+
+em {
+    font-style: italic; /* ทำให้ข้อความในแท็ก em เป็นตัวเอียง */
+}
+
+mark {
+    background-color: rgba(255, 255, 0, 0.5); /* สีพื้นหลังสำหรับ mark */
+}
+
+a {
+    color: #eb0a0a; /* สีของลิงก์ */
+    text-decoration: none; /* ลบเส้นใต้ */
+}
+
+a:hover {
+    text-decoration: underline; /* เส้นใต้เมื่อชี้ไปที่ลิงก์ */
+}
+
+/* Container for Image and Text */
+.image-text-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start; /* จัดให้ข้อความอยู่ด้านบนของภาพ */
+    margin-top: 20px;
+}
+
+/* Fixed Size for Image */
+.activity-image {
+    width: 1000px; /* ล็อกความกว้างของรูปภาพ */
+    height: 600px; /* ล็อกความสูงของรูปภาพ */
+    object-fit: cover; /* ปรับภาพให้ครอบคลุมพื้นที่โดยไม่เสียสัดส่วน */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: block; /* แสดงเป็นบล็อก */
+    margin: 20px auto; /* จัดให้อยู่ตรงกลางในแนวนอน */
+    margin-left: 45px;
+
+}
+
+/* Map Container */
+.map-container {
+    margin-top: 20px;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .image-text-container {
+        flex-direction: column; /* เรียงแนวตั้งบนหน้าจอเล็ก */
+        align-items: flex-start; /* จัดแนวด้านซ้าย */
+    }
+
+    .activity-image {
+        width: 100%; /* ทำให้ภาพขยายเต็มคอนเทนเนอร์บนหน้าจอเล็ก */
+        height: auto; /* รักษาสัดส่วนของภาพ */
+        margin-right: 0; /* ลบระยะห่างขวา */
+        margin-bottom: 10px; /* เพิ่มระยะห่างด้านล่าง */
+    }
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,61 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* สีพื้นหลังของหน้าเว็บ */
+    color: #333; /* สีข้อความทั่วไป */
+}
+
+/* Header Styles */
+.navbar {
+    display: flex; /* ใช้ Flexbox เพื่อจัดระเบียบ */
+    justify-content: space-between; /* จัดให้มีระยะห่างระหว่างองค์ประกอบ */
+    align-items: center; /* จัดให้อยู่กลางแนวตั้ง */
+    padding: 20px 40px; /* การเติมภายใน */
+    background-color: #ffffff; /* สีพื้นหลังของ navbar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* เงาเบา */
+}
+
+.navbar h1 {
+    margin: 0; /* ลบระยะขอบ */
+    font-size: 30px; /* ขนาดฟอนต์ */
+}
+
+nav ul {
+    list-style: none; /* ลบสัญลักษณ์หน้ารายการ */
+    display: flex; /* แสดงรายการในรูปแบบแถว */
+    gap: 20px; /* ระยะห่างระหว่างรายการ */
+    padding: 0; /* ลบการเติม */
+    margin: 0; /* ลบระยะขอบ */
+}
+
+nav ul li a {
+    text-decoration: none; /* ลบเส้นใต้จากลิงก์ */
+    color: #000; /* สีข้อความในลิงก์ */
+    font-weight: bold; /* ตัวหนาสำหรับข้อความในลิงก์ */
+    transition: color 0.3s ease; /* การเปลี่ยนสีเมื่อชี้ */
+}
+
+nav ul li a:hover {
+    color: #1058dd; /* เปลี่ยนสีเมื่อชี้ */
+}
+
+/* Hero Text Styles */
+.hero-text h2 {
+    font-size: 36px; /* ขนาดฟอนต์ */
+    margin-bottom: 20px; /* ระยะขอบด้านล่าง */
+}
+
+/* Main Header Styles */
+h2 {
+    margin: 0; /* ลบระยะขอบ */
+    font-size: 30px; /* ขนาดฟอนต์ */
+    padding: 20px 40px; /* การเติมภายใน */
+}
+
+/* Icons Section Styles */
+.icons1 {
+    text-align: center; /* จัดข้อความให้อยู่กลาง */
+    margin: 20px 0;
+} /* ระยะห่างด้านบนและด้านล่าง
