@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ห้องสมุดในกรุงเทพ</title>
+    <link rel="stylesheet" href="23.css">
+</head>
+<body>
+    <header class="navbar">
+        <h1>ห้องสมุดในกรุงเทพ</h1>
+        <nav>
+            <ul>
+                <li><a href="หน้าแรก.html">หน้าแรก</a></li>
+                <li><a href="ห้องสมุด.html">ห้องสมุด</a></li>
+                <li><a href="ฟิตเนส.html">ฟิตเนส</a></li>
+                <li><a href="สวนสาธารณะ.html">สวนสาธารณะ</a></li>
+                <li><a href="แกลเลอรี่.html">แกลเลอรี่</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="activities" id="library-list">
+            <!-- ข้อมูลจาก Firestore จะแสดงที่นี่ -->
+        </section>
+
+    </main>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getStorage, ref, getDownloadURL, listAll } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+        // 🔹 ตั้งค่า Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPNcrB-EKgJo6942fc5TFigtCZsGFOwTY",
+            authDomain: "lay1-56dde.firebaseapp.com",
+            databaseURL: "https://lay1-56dde-default-rtdb.firebaseio.com",
+            projectId: "lay1-56dde",
+            storageBucket: "lay1-56dde.appspot.com", // แก้ไข storageBucket ผิด
+            messagingSenderId: "97065714920",
+            appId: "1:97065714920:web:28a1c69ed5543d80c8f55d",
+            measurementId: "G-LTDEG1LRVM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // 🔹 โหลดข้อมูลห้องสมุดจาก Firestore
+        async function loadLibraries() {
+            const querySnapshot = await getDocs(collection(db, "libraries"));
+            const libraryList = document.getElementById("library-list");
+            libraryList.innerHTML = "";
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                libraryList.innerHTML += `
+                    <div class="activity card" onclick="window.location.href='${data.link}'" style="cursor: pointer;">
+                        <img src="${data.imageUrl}" class="card-img" alt="${data.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${data.name}</h5>
+                            <p>${data.description}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        loadLibraries();
+
+        // ✅ ฟังก์ชันดึงรายการไฟล์จาก Firebase Storage
+        async function listUploadedFiles() {
+            const filesList = document.getElementById("files-list");
+            filesList.innerHTML = "";
+
+            try {
+                const storageRef = ref(storage, "libraries/");
+                const result = await listAll(storageRef);
+
+                result.items.forEach(async (fileRef) => {
+                    const fileUrl = await getDownloadURL(fileRef);
+                    const listItem = document.createElement("li");
+                    listItem.innerHTML = `<a href="${fileUrl}" target="_blank">${fileRef.name}</a>`;
+                    filesList.appendChild(listItem);
+                });
+
+            } catch (error) {
+                console.error("❌ ไม่สามารถโหลดรายการไฟล์:", error);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            listUploadedFiles();
+        });
+    </script>
+
+</body>
+</html>

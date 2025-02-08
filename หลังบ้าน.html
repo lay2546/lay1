@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจัดการสันทนาการ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .admin-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th {
+            background: #007bff;
+            color: white;
+            text-align: center;
+        }
+        tr:hover {
+            background: #f1f1f1;
+        }
+        .modal-content {
+            border-radius: 15px;
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+        }
+        .action-buttons button {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">📅 ระบบจัดการสันทนาการ</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">จัดการกิจกรรม</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">หมวดหมู่</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ผู้ใช้งาน</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container admin-panel">
+        <h2 class="text-center text-primary">📌 จัดการกิจกรรม</h2>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addActivityModal">
+            ➕ เพิ่มกิจกรรมใหม่
+        </button>
+        
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                    <th>ชื่อกิจกรรม</th>
+                    <th>ประเภท</th>
+                    <th>สถานที่</th>
+                    <th>การจัดการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>สวนวชิรเบญจทัศ</td>
+                    <td>สวนสาธารณะ</td>
+                    <td>จตุจักร</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-warning">✏️ แก้ไข</button>
+                        <button class="btn btn-sm btn-danger">🗑️ ลบ</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>สวนลุมพินี</td>
+                    <td>สวนสาธารณะ</td>
+                    <td>ปทุมวัน</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-warning">✏️ แก้ไข</button>
+                        <button class="btn btn-sm btn-danger">🗑️ ลบ</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal เพิ่มกิจกรรม -->
+    <div class="modal fade" id="addActivityModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">➕ เพิ่มกิจกรรมใหม่</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addActivityForm">
+                        <div class="mb-3">
+                            <label class="form-label">ชื่อกิจกรรม</label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">ประเภท</label>
+                            <select class="form-select" name="category" required>
+                                <option value="park">สวนสาธารณะ</option>
+                                <option value="library">ห้องสมุด</option>
+                                <option value="fitness">ฟิตเนส</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">สถานที่</label>
+                            <input type="text" class="form-control" name="location" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">รายละเอียด</label>
+                            <textarea class="form-control" name="description" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">รูปภาพ</label>
+                            <input type="file" class="form-control" name="image" accept="image/*">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<!-- Modal แก้ไขกิจกรรม -->
+<div class="modal fade" id="editActivityModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-white">
+                <h5 class="modal-title">✏️ แก้ไขกิจกรรม</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editActivityForm">
+                    <input type="hidden" name="edit_id"> <!-- ซ่อนค่า ID -->
+                    <div class="mb-3">
+                        <label class="form-label">ชื่อกิจกรรม</label>
+                        <input type="text" class="form-control" name="edit_title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">ประเภท</label>
+                        <select class="form-select" name="edit_category" required>
+                            <option value="park">สวนสาธารณะ</option>
+                            <option value="library">ห้องสมุด</option>
+                            <option value="fitness">ฟิตเนส</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">สถานที่</label>
+                        <input type="text" class="form-control" name="edit_location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">รายละเอียด</label>
+                        <textarea class="form-control" name="edit_description" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-warning" onclick="updateActivity()">บันทึกการเปลี่ยนแปลง</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // เก็บข้อมูลกิจกรรม
+    let activities = [
+        { id: 1, title: "สวนวชิรเบญจทัศ", category: "park", location: "จตุจักร", description: "สวนสาธารณะขนาดใหญ่" },
+        { id: 2, title: "สวนลุมพินี", category: "park", location: "ปทุมวัน", description: "สวนสาธารณะใจกลางเมือง" }
+    ];
+
+    function displayActivities() {
+        const tableBody = document.querySelector("tbody");
+        tableBody.innerHTML = "";
+        activities.forEach(activity => {
+            const row = `
+                <tr>
+                    <td>${activity.title}</td>
+                    <td>${getCategoryName(activity.category)}</td>
+                    <td>${activity.location}</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-sm btn-warning" onclick="editActivity(${activity.id})">✏️ แก้ไข</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteActivity(${activity.id})">🗑️ ลบ</button>
+                    </td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    function getCategoryName(category) {
+        const categories = { park: "สวนสาธารณะ", library: "ห้องสมุด", fitness: "ฟิตเนส" };
+        return categories[category] || category;
+    }
+
+    function editActivity(id) {
+        const activity = activities.find(a => a.id === id);
+        if (activity) {
+            const form = document.getElementById("editActivityForm");
+            form.edit_id.value = activity.id;
+            form.edit_title.value = activity.title;
+            form.edit_category.value = activity.category;
+            form.edit_location.value = activity.location;
+            form.edit_description.value = activity.description;
+
+            // เปิด Modal แก้ไข
+            const editModal = new bootstrap.Modal(document.getElementById("editActivityModal"));
+            editModal.show();
+        }
+    }
+
+    function updateActivity() {
+        const form = document.getElementById("editActivityForm");
+        const id = parseInt(form.edit_id.value);
+        const index = activities.findIndex(a => a.id === id);
+
+        if (index !== -1) {
+            activities[index].title = form.edit_title.value;
+            activities[index].category = form.edit_category.value;
+            activities[index].location = form.edit_location.value;
+            activities[index].description = form.edit_description.value;
+
+            displayActivities();
+
+            // ปิด Modal
+            const editModal = bootstrap.Modal.getInstance(document.getElementById("editActivityModal"));
+            editModal.hide();
+        }
+    }
+
+    function deleteActivity(id) {
+        if (confirm("คุณต้องการลบกิจกรรมนี้ใช่หรือไม่?")) {
+            activities = activities.filter(a => a.id !== id);
+            displayActivities();
+        }
+    }
+
+    displayActivities();
+    function updateActivity(event) {
+    event.preventDefault(); // ป้องกันการรีโหลดหน้าเว็บ
+
+    const form = document.getElementById("editActivityForm");
+    const id = parseInt(form.edit_id.value);
+    const index = activities.findIndex(a => a.id === id);
+
+    if (index !== -1) {
+        activities[index].title = form.edit_title.value;
+        activities[index].category = form.edit_category.value;
+        activities[index].location = form.edit_location.value;
+        activities[index].description = form.edit_description.value;
+
+        displayActivities();
+
+        // ปิด Modal อย่างถูกต้อง
+        const editModal = bootstrap.Modal.getInstance(document.getElementById("editActivityModal"));
+    
+        editModal.hide();
+    }
+    function saveActivity() {
+    const form = document.getElementById("addActivityForm");
+    const title = form.title.value.trim();
+    const category = form.category.value;
+    const location = form.location.value.trim();
+    const description = form.description.value.trim();
+
+    if (!title || !category || !location) {
+        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+        return;
+    }
+
+    const newActivity = {
+        id: activities.length + 1,
+        title: title,
+        category: category,
+        location: location,
+        description: description
+    };
+
+    activities.push(newActivity);
+    displayActivities();
+
+    // รีเซ็ตฟอร์มหลังจากเพิ่มกิจกรรม
+    form.reset();
+
+    // ปิด Modal
+    const addModal = bootstrap.Modal.getInstance(document.getElementById("addActivityModal"));
+    addModal.hide();
+}
+
+}
+</script>

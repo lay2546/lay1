@@ -1,0 +1,80 @@
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  
+    // 🔹 ใส่ Firebase Config ของคุณจาก Firebase Console
+   const firebaseConfig = {
+    apiKey: "AIzaSyDPNcrB-EKgJo6942fc5TFigtCZsGFOwTY",
+    authDomain: "lay1-56dde.firebaseapp.com",
+    databaseURL: "https://lay1-56dde-default-rtdb.firebaseio.com",
+    projectId: "lay1-56dde",
+    storageBucket: "lay1-56dde.firebasestorage.app",
+    messagingSenderId: "97065714920",
+    appId: "1:97065714920:web:28a1c69ed5543d80c8f55d",
+    measurementId: "G-LTDEG1LRVM"
+  };
+  
+    // 🔹 เริ่มใช้งาน Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+  
+    // 📌 โหลดกิจกรรมจาก Firestore
+    async function loadActivities() {
+      const querySnapshot = await getDocs(collection(db, "activities"));
+      const tableBody = document.getElementById("activities-table");
+      tableBody.innerHTML = "";
+  
+      querySnapshot.forEach((doc) => {
+        const activity = doc.data();
+        const row = `
+          <tr>
+            <td>${activity.title}</td>
+            <td>${getCategoryName(activity.category)}</td>
+            <td>${activity.location}</td>
+            <td class="action-buttons">
+              <button class="btn btn-sm btn-danger" onclick="deleteActivity('${doc.id}')">ลบ</button>
+            </td>
+          </tr>
+        `;
+        tableBody.innerHTML += row;
+      });
+    }
+  
+    // 📌 เพิ่มกิจกรรมใหม่ใน Firestore
+    async function saveActivity() {
+      const form = document.getElementById("addActivityForm");
+      const formData = new FormData(form);
+      
+      const newActivity = {
+        title: formData.get("title"),
+        category: formData.get("category"),
+        location: formData.get("location"),
+        description: formData.get("description")
+      };
+  
+      await addDoc(collection(db, "activities"), newActivity);
+      alert("เพิ่มกิจกรรมเรียบร้อย!");
+      loadActivities();
+      const modal = bootstrap.Modal.getInstance(document.getElementById("addActivityModal"));
+      modal.hide();
+      form.reset();
+    }
+  
+    // 📌 ลบกิจกรรมจาก Firestore
+    async function deleteActivity(id) {
+      if (confirm("คุณต้องการลบกิจกรรมนี้ใช่หรือไม่?")) {
+        await deleteDoc(doc(db, "activities", id));
+        alert("ลบกิจกรรมสำเร็จ!");
+        loadActivities();
+      }
+    }
+  
+    // 📌 โหลดข้อมูลเมื่อหน้าเว็บโหลดเสร็จ
+    document.addEventListener("DOMContentLoaded", loadActivities);
+  
+    // 📌 ใช้งานฟังก์ชันจาก HTML
+    window.saveActivity = saveActivity;
+    window.deleteActivity = deleteActivity;
+  
+  </script>
+  

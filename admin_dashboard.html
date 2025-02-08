@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - จัดการห้องสมุด</title>
+</head>
+<body>
+
+    <h1>Admin Panel - จัดการห้องสมุด</h1>
+    <button id="logout">ออกจากระบบ</button>
+
+    <h2>เพิ่มห้องสมุด</h2>
+    <form id="add-library-form">
+        <input type="text" id="library-name" placeholder="ชื่อห้องสมุด" required>
+        <input type="text" id="library-link" placeholder="URL รายละเอียด" required>
+        <input type="file" id="library-image">
+        <button type="submit">เพิ่มห้องสมุด</button>
+    </form>
+
+    <h2>รายการห้องสมุด</h2>
+    <ul id="library-list"></ul>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+        // 🔹 ตั้งค่า Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPNcrB-EKgJo6942fc5TFigtCZsGFOwTY",
+  authDomain: "lay1-56dde.firebaseapp.com",
+  databaseURL: "https://lay1-56dde-default-rtdb.firebaseio.com",
+  projectId: "lay1-56dde",
+  storageBucket: "lay1-56dde.firebasestorage.app",
+  messagingSenderId: "97065714920",
+  appId: "1:97065714920:web:28a1c69ed5543d80c8f55d",
+  measurementId: "G-LTDEG1LRVM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
+
+        // ✅ ตรวจสอบว่าผู้ใช้ล็อกอินหรือไม่
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "admin_login.html"; // ถ้ายังไม่ล็อกอินให้กลับไปหน้า login
+            }
+        });
+
+        // ✅ ออกจากระบบ
+        document.getElementById("logout").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "admin_login.html";
+            });
+        });
+
+        // ✅ เพิ่มห้องสมุด
+        document.getElementById("add-library-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const name = document.getElementById("library-name").value;
+            const link = document.getElementById("library-link").value;
+            const imageFile = document.getElementById("library-image").files[0];
+
+            let imageUrl = "";
+            if (imageFile) {
+                const storageRef = ref(storage, "libraries/" + imageFile.name);
+                await uploadBytes(storageRef, imageFile);
+                imageUrl = await getDownloadURL(storageRef);
+            }
+
+            await addDoc(collection(db, "libraries"), {
+                name,
+                imageUrl,
+                link
+            });
+
+            alert("เพิ่มห้องสมุดเรียบร้อย!");
+            location.reload();
+        });
+
+        // ✅ โหลดรายการห้องสมุด
+        async function loadLibraries() {
+            const querySnapshot = await getDocs(collection(db, "libraries"));
+            const libraryList = document.getElementById("library-list");
+            libraryList.innerHTML = "";
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                libraryList.innerHTML += `
+                    <li>
+                        <h3>${data.name}</h3>
+                        <img src="${data.imageUrl}" width="100">
+                        <a href="${data.link}" target="_blank">ดูรายละเอียด</a>
+                        <button onclick="deleteLibrary('${doc.id}')">ลบ</button>
+                    </li>
+                `;
+            });
+        }
+
+        // ✅ ลบห้องสมุด
+        window.deleteLibrary = async function (id) {
+            await deleteDoc(doc(db, "libraries", id));
+            alert("ลบห้องสมุดเรียบร้อย!");
+            location.reload();
+        }
+
+        loadLibraries();
+    </script>
+
+</body>
+</html>
